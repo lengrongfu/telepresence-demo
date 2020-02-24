@@ -1,4 +1,4 @@
-FROM golang:1.7.3 as build
+FROM golang:1.13.4 as build
 WORKDIR /go/src/github.com/lengrongfu/telepresence-demo/service-b
 COPY . .
 #RUN cd /test/multi-stage-demo

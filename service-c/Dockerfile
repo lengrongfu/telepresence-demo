@@ -1,5 +1,5 @@
-FROM golang:1.7.3 as build
-WORKDIR /go/src/githu.com/lengrongfu/telepresence-demo/service-c
+FROM golang:1.13.4 as build
+WORKDIR /go/src/github.com/lengrongfu/telepresence-demo/service-c
 COPY . .
 #RUN cd /test/multi-stage-demo
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .

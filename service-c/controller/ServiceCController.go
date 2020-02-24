@@ -2,7 +2,7 @@ package controller
 
 import (
 	"fmt"
-	"github.com/lengrongfu/telepresence-demo/service-a/config"
+	"github.com/lengrongfu/telepresence-demo/service-c/config"
 	"github.com/lengrongfu/telepresence-demo/service-c/log"
 	"io/ioutil"
 	"net/http"
