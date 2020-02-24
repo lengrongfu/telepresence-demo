@@ -1,0 +1,308 @@
+   0.0 TEL | Telepresence 0.104 launched at Tue Feb 25 07:29:59 2020
+   0.0 TEL |   /usr/bin/telepresence --swap-deployment service-b --env-json ratelimit_env.json
+   0.0 TEL | uname: uname_result(system='Linux', node='ubt01', release='5.3.0-28-generic', version='#30~18.04.1-Ubuntu SMP Fri Jan 17 06:14:09 UTC 2020', machine='x86_64', processor='x86_64')
+   0.0 TEL | Platform: linux
+   0.0 TEL | WSL: False
+   0.0 TEL | Python 3.6.9 (default, Nov  7 2019, 10:44:02)
+   0.0 TEL | [GCC 8.3.0]
+   0.0 TEL | BEGIN SPAN main.py:40(main)
+   0.0 TEL | BEGIN SPAN startup.py:83(set_kube_command)
+   0.0 TEL | Found kubectl -> /usr/bin/kubectl
+   0.0 TEL | [1] Capturing: kubectl config current-context
+   0.1 TEL | [1] captured in 0.04 secs.
+   0.1 TEL | [2] Capturing: kubectl --context kubernetes-admin@kubernetes version --short
+   0.1 TEL | [2] captured in 0.05 secs.
+   0.1 TEL | [3] Capturing: kubectl --context kubernetes-admin@kubernetes config view -o json
+   0.2 TEL | [3] captured in 0.05 secs.
+   0.2 TEL | [4] Capturing: kubectl --context kubernetes-admin@kubernetes get ns default
+   0.2 TEL | [4] captured in 0.05 secs.
+   0.2 TEL | [5] Capturing: kubectl --context kubernetes-admin@kubernetes api-versions
+   0.3 TEL | [5] captured in 0.05 secs.
+   0.3 TEL | Command: kubectl 1.17.3
+   0.3 TEL | Context: kubernetes-admin@kubernetes, namespace: default, version: 1.17.3
+   0.3 TEL | END SPAN startup.py:83(set_kube_command)    0.3s
+   0.3 TEL | Found ssh -> /usr/bin/ssh
+   0.3 TEL | [6] Capturing: ssh -V
+   0.3 TEL | [6] captured in 0.00 secs.
+   0.3 TEL | Found bash -> /bin/bash
+   0.3 TEL | Found sshuttle-telepresence -> /usr/libexec/sshuttle-telepresence
+   0.3 TEL | Found conntrack -> /usr/sbin/conntrack
+   0.3 TEL | Found iptables -> /sbin/iptables
+   0.3 TEL | Found sudo -> /usr/bin/sudo
+   0.3 TEL | [7] Running: sudo -n echo -n
+   0.3 TEL | [7] ran in 0.01 secs.
+   0.3 TEL | [8] Capturing: sudo iptables --list
+   0.3 TEL | [8] captured in 0.01 secs.
+   0.3 >>> | Starting proxy with method 'vpn-tcp', which has the following limitations: All processes are affected, only one telepresence can run per machine, and you can't use other VPNs. You may need to add cloud hosts and headless services with --also-proxy. For a full list of method limitations see https://telepresence.io/reference/methods.html
+   0.3 TEL | Found sshfs -> /usr/bin/sshfs
+   0.3 TEL | Found fusermount -> /bin/fusermount
+   0.3 >>> | Volumes are rooted at $TELEPRESENCE_ROOT. See https://telepresence.io/howto/volumes.html for details.
+   0.3 TEL | [9] Running: kubectl --context kubernetes-admin@kubernetes --namespace default get pods telepresence-connectivity-check --ignore-not-found
+   0.3 TEL | [9] ran in 0.06 secs.
+   1.3 TEL | Scout info: {'latest_version': '0.104', 'application': 'telepresence', 'notices': []}
+   1.3 TEL | BEGIN SPAN deployment.py:193(supplant_deployment)
+   1.3 >>> | Starting network proxy to cluster by swapping out Deployment service-b with a proxy
+   1.3 TEL | BEGIN SPAN remote.py:75(get_deployment_json)
+   1.3 TEL | [10] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get deployment -o json service-b
+   1.3 TEL | [10] captured in 0.07 secs.
+   1.3 TEL | END SPAN remote.py:75(get_deployment_json)    0.1s
+   1.3 TEL | [11] Running: kubectl --context kubernetes-admin@kubernetes --namespace default delete deployment service-b-2a1f2051e1d7457e967de82d220037c5 --ignore-not-found
+   1.4 TEL | [11] ran in 0.06 secs.
+   1.4 TEL | [12] Running: kubectl --context kubernetes-admin@kubernetes --namespace default apply -f -
+   1.5  12 | deployment.apps/service-b-2a1f2051e1d7457e967de82d220037c5 created
+   1.5 TEL | [12] ran in 0.12 secs.
+   1.5 TEL | [13] Running: kubectl --context kubernetes-admin@kubernetes --namespace default scale deployment service-b --replicas=0
+   1.6  13 | deployment.apps/service-b scaled
+   1.6 TEL | [13] ran in 0.10 secs.
+   1.6 TEL | END SPAN deployment.py:193(supplant_deployment)    0.3s
+   1.6 TEL | BEGIN SPAN remote.py:142(get_remote_info)
+   1.6 TEL | BEGIN SPAN remote.py:75(get_deployment_json)
+   1.6 TEL | [14] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get deployment -o json --selector=telepresence=2a1f2051e1d7457e967de82d220037c5
+   1.8 TEL | [14] captured in 0.16 secs.
+   1.8 TEL | END SPAN remote.py:75(get_deployment_json)    0.2s
+   1.8 TEL | Searching for Telepresence pod:
+   1.8 TEL |   with name service-b-2a1f2051e1d7457e967de82d220037c5-*
+   1.8 TEL |   with labels {'app': 'service-b', 'telepresence': '2a1f2051e1d7457e967de82d220037c5'}
+   1.8 TEL | [15] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod -o json --selector=telepresence=2a1f2051e1d7457e967de82d220037c5
+   1.8 TEL | [15] captured in 0.08 secs.
+   1.8 TEL | Checking service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp
+   1.8 TEL | Looks like we've found our pod!
+   1.8 TEL | BEGIN SPAN remote.py:104(wait_for_pod)
+   1.8 TEL | [16] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   2.1 TEL | [16] captured in 0.26 secs.
+   2.4 TEL | [17] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   2.5 TEL | [17] captured in 0.10 secs.
+   2.7 TEL | [18] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   2.8 TEL | [18] captured in 0.07 secs.
+   3.0 TEL | [19] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   3.1 TEL | [19] captured in 0.07 secs.
+   3.3 TEL | [20] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   3.4 TEL | [20] captured in 0.07 secs.
+   3.7 TEL | [21] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   3.7 TEL | [21] captured in 0.08 secs.
+   4.0 TEL | [22] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   4.0 TEL | [22] captured in 0.06 secs.
+   4.3 TEL | [23] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   4.4 TEL | [23] captured in 0.07 secs.
+   4.6 TEL | [24] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   4.7 TEL | [24] captured in 0.07 secs.
+   4.9 TEL | [25] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   5.0 TEL | [25] captured in 0.09 secs.
+   5.3 TEL | [26] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   5.4 TEL | [26] captured in 0.07 secs.
+   5.6 TEL | [27] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   5.7 TEL | [27] captured in 0.07 secs.
+   5.9 TEL | [28] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   6.0 TEL | [28] captured in 0.08 secs.
+   6.3 TEL | [29] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   6.3 TEL | [29] captured in 0.08 secs.
+   6.6 TEL | [30] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   6.7 TEL | [30] captured in 0.07 secs.
+   6.9 TEL | [31] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   7.0 TEL | [31] captured in 0.09 secs.
+   7.2 TEL | [32] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   7.3 TEL | [32] captured in 0.08 secs.
+   7.6 TEL | [33] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   7.6 TEL | [33] captured in 0.07 secs.
+   7.9 TEL | [34] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   8.0 TEL | [34] captured in 0.07 secs.
+   8.2 TEL | [35] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   8.3 TEL | [35] captured in 0.06 secs.
+   8.5 TEL | [36] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   8.6 TEL | [36] captured in 0.06 secs.
+   8.8 TEL | [37] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   8.9 TEL | [37] captured in 0.06 secs.
+   9.1 TEL | [38] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   9.2 TEL | [38] captured in 0.07 secs.
+   9.5 TEL | [39] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   9.5 TEL | [39] captured in 0.07 secs.
+   9.8 TEL | [40] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+   9.9 TEL | [40] captured in 0.08 secs.
+  10.1 TEL | [41] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  10.2 TEL | [41] captured in 0.09 secs.
+  10.5 TEL | [42] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  10.5 TEL | [42] captured in 0.07 secs.
+  10.8 TEL | [43] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  10.9 TEL | [43] captured in 0.07 secs.
+  11.1 TEL | [44] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  11.2 TEL | [44] captured in 0.07 secs.
+  11.4 TEL | [45] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  11.5 TEL | [45] captured in 0.06 secs.
+  11.7 TEL | [46] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  11.8 TEL | [46] captured in 0.06 secs.
+  12.1 TEL | [47] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  12.1 TEL | [47] captured in 0.06 secs.
+  12.4 TEL | [48] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  12.4 TEL | [48] captured in 0.08 secs.
+  12.7 TEL | [49] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  12.8 TEL | [49] captured in 0.09 secs.
+  13.0 TEL | [50] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  13.1 TEL | [50] captured in 0.07 secs.
+  13.4 TEL | [51] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  13.4 TEL | [51] captured in 0.06 secs.
+  13.7 TEL | [52] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  13.8 TEL | [52] captured in 0.10 secs.
+  14.0 TEL | [53] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  14.1 TEL | [53] captured in 0.08 secs.
+  14.3 TEL | [54] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  14.4 TEL | [54] captured in 0.06 secs.
+  14.7 TEL | [55] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pod service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp -o json
+  14.7 TEL | [55] captured in 0.09 secs.
+  14.7 TEL | END SPAN remote.py:104(wait_for_pod)   12.9s
+  14.7 TEL | END SPAN remote.py:142(get_remote_info)   13.1s
+  14.7 TEL | BEGIN SPAN connect.py:37(connect)
+  14.7 TEL | [56] Launching kubectl logs: kubectl --context kubernetes-admin@kubernetes --namespace default logs -f service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp --container service-b --tail=10
+  14.7 TEL | [57] Launching kubectl port-forward: kubectl --context kubernetes-admin@kubernetes --namespace default port-forward service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp 32873:8022
+  14.8 TEL | [58] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 32873 telepresence@127.0.0.1 /bin/true
+  14.8 TEL | [58] exit 255 in 0.02 secs.
+  14.9  56 | 2020-02-24T23:30:14+0000 [-] Loading ./forwarder.py...
+  14.9  56 | 2020-02-24T23:30:14+0000 [-] /etc/resolv.conf changed, reparsing
+  14.9  56 | 2020-02-24T23:30:14+0000 [-] Resolver added ('10.96.0.10', 53) to server list
+  14.9  56 | 2020-02-24T23:30:14+0000 [-] SOCKSv5Factory starting on 9050
+  14.9  56 | 2020-02-24T23:30:14+0000 [socks.SOCKSv5Factory#info] Starting factory <socks.SOCKSv5Factory object at 0x7f06cb96eb00>
+  14.9  56 | 2020-02-24T23:30:14+0000 [-] DNSDatagramProtocol starting on 9053
+  14.9  56 | 2020-02-24T23:30:14+0000 [-] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f06cb96eeb8>
+  14.9  56 | 2020-02-24T23:30:14+0000 [-] Loaded.
+  14.9  56 | 2020-02-24T23:30:14+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.10.0 (/usr/bin/python3.6 3.6.8) starting up.
+  14.9  56 | 2020-02-24T23:30:14+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+  14.9  57 | Forwarding from 127.0.0.1:32873 -> 8022
+  14.9  57 | Forwarding from [::1]:32873 -> 8022
+  15.0 TEL | [59] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 32873 telepresence@127.0.0.1 /bin/true
+  15.1  57 | Handling connection for 32873
+  15.1 TEL | [59] ran in 0.07 secs.
+  15.1 >>> | Forwarding remote port 80 to local port 80.
+  15.1 TEL | [60] Launching SSH port forward (exposed ports): ssh -N -oServerAliveInterval=1 -oServerAliveCountMax=10 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 32873 telepresence@127.0.0.1 -R '*:80:127.0.0.1:80'
+  15.1 >>> | 
+  15.1 TEL | Launching Web server for proxy poll
+  15.1 TEL | [61] Launching SSH port forward (socks and proxy poll): ssh -N -oServerAliveInterval=1 -oServerAliveCountMax=10 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 32873 telepresence@127.0.0.1 -L127.0.0.1:34135:127.0.0.1:9050 -R9055:127.0.0.1:43115
+  15.1  57 | Handling connection for 32873
+  15.1 TEL | END SPAN connect.py:37(connect)    0.4s
+  15.1 TEL | BEGIN SPAN remote_env.py:29(get_remote_env)
+  15.1 TEL | [62] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default exec service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp --container service-b -- python3 podinfo.py
+  15.1  57 | Handling connection for 32873
+  15.4 TEL | [62] captured in 0.23 secs.
+  15.4 TEL | END SPAN remote_env.py:29(get_remote_env)    0.2s
+  15.4 TEL | BEGIN SPAN mount.py:30(mount_remote_volumes)
+  15.4 TEL | [63] Running: sshfs -p 32873 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null telepresence@127.0.0.1:/ /tmp/tel-yaikq8ui/fs
+  15.4  57 | Handling connection for 32873
+  15.4 TEL | [63] ran in 0.06 secs.
+  15.4 TEL | END SPAN mount.py:30(mount_remote_volumes)    0.1s
+  15.4 TEL | BEGIN SPAN vpn.py:271(connect_sshuttle)
+  15.4 TEL | BEGIN SPAN vpn.py:77(get_proxy_cidrs)
+  15.4 TEL | [64] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get nodes -o json
+  15.5 TEL | [64] captured in 0.06 secs.
+  15.5 TEL | [65] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get pods -o json
+  15.5 TEL | [65] captured in 0.06 secs.
+  15.5 TEL | [66] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get services -o json
+  15.6 TEL | [66] captured in 0.06 secs.
+  15.6 TEL | [67] Running: kubectl --context kubernetes-admin@kubernetes --namespace default create service clusterip telepresence-1582587015-27057-82234 --tcp=3000
+  15.7  67 | service/telepresence-1582587015-27057-82234 created
+  15.7 TEL | [67] ran in 0.06 secs.
+  15.7 TEL | [68] Running: kubectl --context kubernetes-admin@kubernetes --namespace default create service clusterip telepresence-1582587015-3337102-82234 --tcp=3000
+  15.7  68 | service/telepresence-1582587015-3337102-82234 created
+  15.7 TEL | [68] ran in 0.08 secs.
+  15.7 TEL | [69] Running: kubectl --context kubernetes-admin@kubernetes --namespace default create service clusterip telepresence-1582587015-414184-82234 --tcp=3000
+  15.8  69 | service/telepresence-1582587015-414184-82234 created
+  15.8 TEL | [69] ran in 0.08 secs.
+  15.8 TEL | [70] Running: kubectl --context kubernetes-admin@kubernetes --namespace default create service clusterip telepresence-1582587015-5000846-82234 --tcp=3000
+  15.9  70 | service/telepresence-1582587015-5000846-82234 created
+  15.9 TEL | [70] ran in 0.08 secs.
+  15.9 TEL | [71] Running: kubectl --context kubernetes-admin@kubernetes --namespace default create service clusterip telepresence-1582587015-5825334-82234 --tcp=3000
+  16.0  71 | service/telepresence-1582587015-5825334-82234 created
+  16.0 TEL | [71] ran in 0.08 secs.
+  16.0 TEL | [72] Capturing: kubectl --context kubernetes-admin@kubernetes --namespace default get services -o json
+  16.1 TEL | [72] captured in 0.08 secs.
+  16.1 TEL | [73] Running: kubectl --context kubernetes-admin@kubernetes --namespace default delete service telepresence-1582587015-27057-82234
+  16.1  73 | service "telepresence-1582587015-27057-82234" deleted
+  16.1 TEL | [73] ran in 0.08 secs.
+  16.1 TEL | [74] Running: kubectl --context kubernetes-admin@kubernetes --namespace default delete service telepresence-1582587015-3337102-82234
+  16.2  74 | service "telepresence-1582587015-3337102-82234" deleted
+  16.2 TEL | [74] ran in 0.08 secs.
+  16.2 TEL | [75] Running: kubectl --context kubernetes-admin@kubernetes --namespace default delete service telepresence-1582587015-414184-82234
+  16.3  75 | service "telepresence-1582587015-414184-82234" deleted
+  16.3 TEL | [75] ran in 0.09 secs.
+  16.3 TEL | [76] Running: kubectl --context kubernetes-admin@kubernetes --namespace default delete service telepresence-1582587015-5000846-82234
+  16.4  76 | service "telepresence-1582587015-5000846-82234" deleted
+  16.4 TEL | [76] ran in 0.09 secs.
+  16.4 TEL | [77] Running: kubectl --context kubernetes-admin@kubernetes --namespace default delete service telepresence-1582587015-5825334-82234
+  16.5  77 | service "telepresence-1582587015-5825334-82234" deleted
+  16.5 TEL | [77] ran in 0.10 secs.
+  16.5 >>> | Guessing that Services IP range is 10.96.0.0/12. Services started after this point will be inaccessible if are outside this range; restart telepresence if you can't access a new Service.
+  16.5 TEL | END SPAN vpn.py:77(get_proxy_cidrs)    1.1s
+  16.5 TEL | [78] Launching sshuttle: sshuttle-telepresence -v --dns --method nat -e 'ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null' -r telepresence@127.0.0.1:32873 --to-ns 127.0.0.1:9053 10.96.0.0/12 10.244.0.0/24
+  16.5 TEL | BEGIN SPAN vpn.py:294(connect_sshuttle,sshuttle-wait)
+  16.5 TEL | Wait for vpn-tcp connection: hellotelepresence-0
+  16.5 TEL | [79] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0")'
+  16.7 TEL | [79] exit 1 in 0.17 secs.
+  16.7 TEL | [80] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0.a.sanity.check.telepresence.io")'
+  16.8  78 | Traceback (most recent call last):
+  16.8  78 |   File "/usr/lib/python3.6/runpy.py", line 193, in _run_module_as_main
+  16.8  78 |     "__main__", mod_spec)
+  16.8  78 |   File "/usr/lib/python3.6/runpy.py", line 85, in _run_code
+  16.8  78 |     exec(code, run_globals)
+  16.8  78 |   File "/usr/libexec/sshuttle-telepresence/__main__.py", line 31, in <module>
+  16.8  78 |   File "/usr/libexec/sshuttle-telepresence/.bootstrap/pex/pex_bootstrapper.py", line 12, in <module>
+  16.8  78 |   File "/usr/libexec/sshuttle-telepresence/.bootstrap/pex/interpreter.py", line 17, in <module>
+  16.8  78 |   File "/usr/libexec/sshuttle-telepresence/.bootstrap/pex/vendor/_vendored/packaging/packaging/tags.py", line 7, in <module>
+  16.8  78 | ModuleNotFoundError: No module named 'distutils.util'
+  16.8 TEL | [78] sshuttle: exit 1
+  16.9 TEL | [80] exit 1 in 0.22 secs.
+  18.9 TEL | CRASH: 1 background process(es) crashed
+  18.9 TEL | Background process (sshuttle) exited with return code 1. Command was:
+  18.9 TEL |   sshuttle-telepresence -v --dns --method nat -e 'ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null' -r telepresence@127.0.0.1:32873 --to-ns 127.0.0.1:9053 10.96.0.0/12 10.244.0.0/24
+  18.9 TEL | 
+  18.9 TEL | Recent output was:
+  18.9 TEL |   Traceback (most recent call last):
+  18.9 TEL |     File "/usr/lib/python3.6/runpy.py", line 193, in _run_module_as_main
+  18.9 TEL |       "__main__", mod_spec)
+  18.9 TEL |     File "/usr/lib/python3.6/runpy.py", line 85, in _run_code
+  18.9 TEL |       exec(code, run_globals)
+  18.9 TEL |     File "/usr/libexec/sshuttle-telepresence/__main__.py", line 31, in <module>
+  18.9 TEL |     File "/usr/libexec/sshuttle-telepresence/.bootstrap/pex/pex_bootstrapper.py", line 12, in <module>
+  18.9 TEL |     File "/usr/libexec/sshuttle-telepresence/.bootstrap/pex/interpreter.py", line 17, in <module>
+  18.9 TEL |     File "/usr/libexec/sshuttle-telepresence/.bootstrap/pex/vendor/_vendored/packaging/packaging/tags.py", line 7, in <module>
+  18.9 TEL |   ModuleNotFoundError: No module named 'distutils.util'
+  18.9 TEL | (calling crash reporter...)
+  22.2 >>> | Exit cleanup in progress
+  22.2 TEL | (Cleanup) Kill BG process [78] sshuttle
+  22.2 TEL | (Cleanup) Unmount remote filesystem
+  22.2 TEL | [81] Running: fusermount -z -u /tmp/tel-yaikq8ui/fs
+  22.2 TEL | [81] ran in 0.01 secs.
+  22.2 TEL | (Cleanup) Kill BG process [61] SSH port forward (socks and proxy poll)
+  22.2 TEL | [61] SSH port forward (socks and proxy poll): exit 0
+  22.2 TEL | (Cleanup) Kill Web server for proxy poll
+  22.6 TEL | (Cleanup) Kill BG process [60] SSH port forward (exposed ports)
+  22.6 TEL | (Cleanup) Kill BG process [57] kubectl port-forward
+  22.6 TEL | [60] SSH port forward (exposed ports): exit 0
+  22.6 TEL | [57] kubectl port-forward: exit -15
+  22.6 TEL | (Cleanup) Kill BG process [56] kubectl logs
+  22.6 TEL | [56] kubectl logs: exit -15
+  22.6 TEL | Background process (kubectl logs) exited with return code -15. Command was:
+  22.6 TEL |   kubectl --context kubernetes-admin@kubernetes --namespace default logs -f service-b-2a1f2051e1d7457e967de82d220037c5-56c8899f4-95rqp --container service-b --tail=10
+  22.6 TEL | 
+  22.6 TEL | Recent output was:
+  22.6 TEL |   2020-02-24T23:30:14+0000 [-] Loading ./forwarder.py...
+  22.6 TEL |   2020-02-24T23:30:14+0000 [-] /etc/resolv.conf changed, reparsing
+  22.6 TEL |   2020-02-24T23:30:14+0000 [-] Resolver added ('10.96.0.10', 53) to server list
+  22.6 TEL |   2020-02-24T23:30:14+0000 [-] SOCKSv5Factory starting on 9050
+  22.6 TEL |   2020-02-24T23:30:14+0000 [socks.SOCKSv5Factory#info] Starting factory <socks.SOCKSv5Factory object at 0x7f06cb96eb00>
+  22.6 TEL |   2020-02-24T23:30:14+0000 [-] DNSDatagramProtocol starting on 9053
+  22.6 TEL |   2020-02-24T23:30:14+0000 [-] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f06cb96eeb8>
+  22.6 TEL |   2020-02-24T23:30:14+0000 [-] Loaded.
+  22.6 TEL |   2020-02-24T23:30:14+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.10.0 (/usr/bin/python3.6 3.6.8) starting up.
+  22.6 TEL |   2020-02-24T23:30:14+0000 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+  22.6 TEL | (Cleanup) Re-scale original deployment
+  22.6 TEL | [82] Running: kubectl --context kubernetes-admin@kubernetes --namespace default scale deployment service-b --replicas=1
+  22.7  82 | deployment.apps/service-b scaled
+  22.7 TEL | [82] ran in 0.07 secs.
+  22.7 TEL | (Cleanup) Delete new deployment
+  22.7 >>> | Swapping Deployment service-b back to its original state
+  22.7 TEL | [83] Running: kubectl --context kubernetes-admin@kubernetes --namespace default delete deployment service-b-2a1f2051e1d7457e967de82d220037c5
+  22.8  83 | deployment.apps "service-b-2a1f2051e1d7457e967de82d220037c5" deleted
+  22.8 TEL | [83] ran in 0.08 secs.
+  22.8 TEL | (Cleanup) Kill sudo privileges holder
+  22.8 TEL | (Cleanup) Stop time tracking
+  22.8 TEL | END SPAN main.py:40(main)   22.8s
+  22.8 TEL | (Cleanup) Remove temporary directory
+  22.8 TEL | (Cleanup) Save caches
+  23.3 TEL | (sudo privileges holder thread exiting)
