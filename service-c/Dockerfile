@@ -13,8 +13,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
 FROM alpine:latest
 
-COPY --from=build /go/src/githu.com/lengrongfu/telepresence-demo/service-c/main \
-                 /go/src/githu.com/lengrongfu/telepresence-demo/service-c/config.json \
+COPY --from=build /go/src/github.com/lengrongfu/telepresence-demo/service-c/main \
+                 /go/src/github.com/lengrongfu/telepresence-demo/service-c/config.json \
                 /root/
 EXPOSE 8000
 

@@ -1,5 +1,5 @@
 FROM golang:1.7.3 as build
-WORKDIR /go/src/githu.com/lengrongfu/telepresence-demo/service-a
+WORKDIR /go/src/github.com/lengrongfu/telepresence-demo/service-a
 COPY . .
 #RUN cd /test/multi-stage-demo
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
@@ -13,8 +13,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
 FROM alpine:latest
 
-COPY --from=build /go/src/githu.com/lengrongfu/telepresence-demo/service-a/main \
-                 /go/src/githu.com/lengrongfu/telepresence-demo/service-a/config.json \
+COPY --from=build /go/src/github.com/lengrongfu/telepresence-demo/service-a/main \
+                 /go/src/github.com/lengrongfu/telepresence-demo/service-a/config.json \
                 /root/
 EXPOSE 8000
 
