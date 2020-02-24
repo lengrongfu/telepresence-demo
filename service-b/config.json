@@ -1,0 +1,6 @@
+{
+    "port":80,
+    "service_b": "serviceB",
+    "service_c": "serviceC",
+    "service_a": "serviceA"
+}
